@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+Ultron — Self-Hosted Full-Stack Infrastructure
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ultron is my personal bare-metal Linux server running a fully self-managed web stack that hosts all of my major projects — including GetYourStart, Retro-Resell, MyRPG, my personal portfolio, and blog.
+It’s engineered for reliability, autonomy, and full control of deployment, database, and networking layers.
 
-## Available Scripts
+⸻
 
-In the project directory, you can run:
+Core Technologies
 
-### `npm start`
+Layer	Stack / Tools	Purpose
+OS & Environment	Ubuntu Server 24.04 LTS	Stable, production-grade base for containerized services
+Containerization	Docker & Docker-Compose	Runs each project in isolated environments with reproducible builds
+Reverse Proxy & Web Serving	Nginx	Handles HTTPS termination, routing, caching, and asset delivery for all hosted domains
+Databases	MySQL, PostgreSQL	Locally hosted relational databases for different projects; migrated from AWS RDS for full control
+Storage	Local SSD storage, mounted /portfolio/ directory	Hosts static assets and uploaded images (replacing AWS S3 buckets)
+Firewall & Security	UFW + Fail2Ban	Provides strong access control and intrusion protection
+Automation & Monitoring	Cron jobs + Bash scripts	Monitors network connectivity, restarts containers, and auto-recovers from network failures
+Networking	Static IP + Bridged Adapter + SSH	Allows external and internal remote access, development via SSH from native terminals
+Version Control	Git + GitHub	Versioned deployment scripts and project codebases
+Cert Management	Certbot (Let’s Encrypt)	Automated SSL certificates for all hosted domains
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+⸻
 
-### `npm test`
+Hosted Projects
+	•	GetYourStart (GYS) — Full-stack Angular + Spring Boot + PostgreSQL job aggregator for entry-level roles
+	•	Retro-Resell — MERN-stack marketplace for buying/selling retro games
+	•	MyRPG — Gamified self-improvement platform built with Angular + Spring Boot + MySQL
+	•	Personal Portfolio — Static React site served through Nginx
+	•	Nasir’s Blog — Markdown-based blog platform deployed with Docker and reverse-proxied by Nginx
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+⸻
 
-### `npm run build`
+Infrastructure Highlights
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Reverse Proxy Architecture
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Each app runs in its own container and is served via an Nginx reverse proxy on the host.
+Example route:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+https://myrpgapp.com  →  Nginx →  myrpg-frontend (port 80)
+                     →  /api   →  myrpg-backend (port 8080)
 
-### `npm run eject`
+Persistent Databases
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+All SQL data is locally stored and backed up automatically via mysqldump and pg_dump cron jobs.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Resilient Networking
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+A custom Bash script monitors connectivity (via ping to 8.8.8.8 and google.com) every 20 minutes.
+If the network goes down, it automatically resets the Ethernet interface, re-applies IP configuration, and restarts Docker.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Auto-Deployment
 
-## Learn More
+On system boot, a startup script automatically runs:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+sudo docker-compose up -d --build
+sudo systemctl restart nginx
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+ensuring all sites come back online after any reboot.
 
-### Code Splitting
+⸻
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Security & Access
+	•	SSH access restricted via key authentication
+	•	UFW allows only ports 22 (SSH), 80 (HTTP), and 443 (HTTPS)
+	•	Fail2Ban monitors SSH logs and bans malicious IPs
+	•	Regular updates and kernel patches applied via automated apt jobs
 
-### Analyzing the Bundle Size
+⸻
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Development Flow
+	1.	Code changes pushed to GitHub
+	2.	Pull updates on Ultron
+	3.	Rebuild Docker containers
+	4.	Nginx auto-routes updated services
+	5.	Logs tracked via:
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+sudo docker logs <container_name>
+tail -f /var/log/nginx/access.log
