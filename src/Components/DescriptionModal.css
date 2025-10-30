@@ -1,0 +1,122 @@
+@font-face {
+  font-family: GlitchFont;
+  src: url('../assets/fonts/GlitchGoblin-2O87v.ttf');
+}
+
+.ModalBackground {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height : 100vh;
+    background-color: rgb(0, 0, 0, 0.5);
+    z-index: 5;
+}
+
+.DescriptionContainer {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width : 900px;
+    height : 600px;
+    left : 50%;
+    top : 50%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgb(40, 40, 40);
+    border-radius: 25px;
+    z-index: 10;
+}
+
+@media (max-width: 1439px) {
+    .DescriptionContainer {
+        width : 200px;
+        height : 600px;
+        padding-left: 75px;
+        padding-right: 75px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .DescriptionContainer {
+        width : 900px;
+        height : 600px;
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+
+.TechnologyDescription {
+    height : 70%;
+    overflow-y: auto;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 1439px) {
+    .TechnologyDescription {
+        width : 100%;
+        font-size: 15px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .TechnologyDescription {
+        width : 80%;
+        font-size: 25px;
+    }
+}
+
+
+.TechnologyIcon {
+    position: absolute;
+    height: auto;
+    top: 20px;
+    left: 20px;
+}
+
+@media (max-width: 1439px) {
+    .TechnologyIcon {
+        width: 50px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .TechnologyIcon {
+        width: 100px;
+    }
+}
+
+.TechnologyTitle {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left : 50%;
+    top : 0;
+    transform: translateX(-50%)
+}
+
+@media (max-width: 1439px) {
+    .TechnologyTitle p {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .TechnologyTitle p {
+        font-size: 40px;
+    }
+}
+
+.TechnologyTitle p {
+    color: white;
+    font-family: GlitchFont;
+}
+
+.TechnologyIcon img {
+    width: 100%;
+    height: 100%;
+}

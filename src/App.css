@@ -1,38 +1,228 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: GlitchFont;
+  src: url('./assets/fonts/GlitchGoblin-2O87v.ttf');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.background {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: -2;
+  background-color: black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.background img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+}
+
+.IntroPage {
+  position: relative;
+  left: 0;
+  top : 0;
+  width : 100vw;
+  height : 100vh;
+  z-index: 1;
+}
+
+.Title, .PrimaryDescriptor p {
+  font-family: GlitchFont;
+  color: white;
+  
+}
+
+.TitleContainer, .PrimaryDescriptor {
+  position: absolute;
+  left : 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+@media (max-width: 1439px) {
+    .TitleContainer, .PrimaryDescriptor {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 95%
+    }
+
+    .Title, .PrimaryDescriptor p {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+    }
+
+    .Title {
+      width : 70%;
+    }
+}
+
+@media (min-width: 1440px) {
+    .TitleContainer, .PrimaryDescriptor {
+
+    }
+
+    .Title, .PrimaryDescriptor p {
+      text-wrap: nowrap;
+      font-size: 50px;
+    }
+}
+
+.TitleContainer {
+    margin-top: 50px;
+    transform: translateX(-50%);
+}
+
+.PrimaryDescriptor {
+  top : 50%;
+  transform: translateY(50%) translateX(-50%);
+}
+
+.Scroll-Down {
+  position: fixed;
+  font-family: GlitchFont;
+  color: white;
+  top : 85%;
+  left : 50%;
+  transform: translateX(-50%);
+  text-wrap: nowrap;
+  z-index: 1;
+}
+
+@media (max-width: 1439px) {
+  .Scroll-Down {
+    font-size: 25px;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+@media (min-width: 1440px) {
+  .Scroll-Down {
+    font-size: 35px;
+  }
+}
+
+
+.SecondSection {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+}
+
+.dark-ultron {
+  position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  width: 500px;
+  height: fit-content;
+  top : 50%;
+  left : 50%;
+  transform: translateY(-50%) translateX(-50%);
 }
 
-.App-link {
-  color: #61dafb;
+.dark-ultron img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Technologies {
+  position: absolute;
+  left : 50%;
+  top : 85%;
+  transform: translateY(-85%) translateX(-50%);
+}
+
+@media (max-width: 1439px) {
+    .Technologies {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 5px;
+    }
+}
+
+@media (min-width: 1440px) {
+    .Technologies {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+    }
+}
+
+.UltronSillouette {
+  position: fixed;
+  height : 80vh;
+  width : auto;
+  bottom : 0;
+  right : 0;
+  z-index: -1;
+}
+
+.UltronSillouette img {
+  width: 100%;
+  height: 100%;
+}
+
+.Technology {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 25px;
+  margin-right: 25px;
+  background-color: black;
+  border-radius: 25px;
+}
+
+.Technology:hover {
+  width: 80px;
+  height: 80px;
+}
+
+@media (max-width: 1439px) {
+    .Technology {
+      width: 40px;
+      height: 40px;
+      padding: 15px 15px 15px 15px;
+      border-radius: 15px;
+    }
+
+    .Technology:hover {
+      width: 50px;
+      height: 50px;
+    }
+}
+
+@media (min-width: 1440px) {
+  .Technology {
+    width: 70px;
+    height: 70px;
+    padding: 20px 20px 20px 20px;
+    border-radius: 25px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .Technology:hover {
+    width: 80px;
+    height: 80px;
   }
+}
+
+
+.Technology img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
